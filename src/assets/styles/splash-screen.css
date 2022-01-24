@@ -1,0 +1,109 @@
+.splash-screen {
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  position: fixed;
+
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+
+  background-color: #f6dfeb;
+}
+
+.splash-screen.hidden {
+  visibility: hidden;
+  transition: all 0.5s ease-in-out;
+  animation: splash-slide-out 0.5s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+.splash-screen .logo {
+  width: 17rem;
+  height: 17rem;
+  position: relative;
+}
+
+.logo .primary-ring, .logo .secondary-ring, .logo .tertiary-ring {
+  border-radius: 50%;
+  border: 1.5rem solid #fff;
+  background-color: transparent;
+}
+
+.logo svg {
+  fill: #fff;
+}
+
+.logo .primary-ring {
+  top: 0;
+  left: 0;
+  position: absolute;
+
+  width: 17rem;
+  height: 17rem;
+
+  opacity: 0.2;
+  animation: splash-beating 2s ease-in-out 1.2s infinite;
+}
+
+.logo .secondary-ring {
+  top: 2rem;
+  left: 2rem;
+  position: absolute;
+
+  width: 13rem;
+  height: 13rem;
+
+  opacity: 0.6;
+  animation: splash-beating 2s ease-in-out 1s infinite;
+}
+
+.logo .tertiary-ring {
+  top: 4rem;
+  left: 4rem;
+  position: absolute;
+
+  width: 9rem;
+  height: 9rem;
+
+  opacity: 0.8;
+  animation: splash-beating 2s ease-in-out 0.8s infinite;
+}
+
+.logo .heart {
+  top: 6.75rem;
+  left: 6.75rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+
+  opacity: 1;
+  animation: beating 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes splash-slide-out {
+  0% {
+    visibility: visible;
+    transform: translateX(0);
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes splash-beating {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,20 @@
+ion-menu::part(container) {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+ion-content::part(background) {
+  background: transparent;
+}
+
+ion-header::after {
+  content: none !important;
+}
+
+ion-button {
+  text-transform: none;
+}
+
+ion-label {
+  font-family: 'Montserrat', sans-serif !important;
+}
