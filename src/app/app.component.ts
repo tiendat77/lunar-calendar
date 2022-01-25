@@ -18,6 +18,7 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+
   appPages = [
     {
       title: 'Date',
@@ -121,4 +122,7 @@ export class AppComponent implements OnInit {
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
   }
+
+
+
 }

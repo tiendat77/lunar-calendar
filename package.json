@@ -32,6 +32,7 @@
     "rxjs": "~6.6.0",
     "swiper": "^7.4.1",
     "tslib": "^2.2.0",
+    "vietnamese-lunar-calendar": "0.0.4",
     "webdriver-manager": "^12.1.8",
     "zone.js": "~0.11.4"
   },

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class UserData {
   favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';

@@ -10,23 +10,42 @@ const routes: Routes = [
     children: [
       {
         path: 'date',
-        loadChildren: () => import('../calendar-date/calendar-date.module').then( m => m.CalendarDatePageModule)
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../calendar-date/calendar-date.module').then( m => m.CalendarDatePageModule)
+          }
+        ]
       },
       {
         path: 'month',
-        loadChildren: () => import('../calendar-month/calendar-month.module').then( m => m.CalendarMonthPageModule)
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../calendar-month/calendar-month.module').then( m => m.CalendarMonthPageModule)
+          }
+        ]
       },
       {
         path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
+          }
+        ]
       },
       {
         path: '',
-        redirectTo: '/app/tabs/date',
+        redirectTo: '/tabs/date',
         pathMatch: 'full'
       }
     ]
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/tabs',
+  },
 ];
 
 @NgModule({

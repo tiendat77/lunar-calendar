@@ -34,6 +34,10 @@
 
 @import "./app/app.scss";
 
+@import './assets/styles/ui';
+@import './assets/styles/fonts';
+@import './assets/styles/custom';
+
 @import '~swiper/scss';
 @import '~@ionic/angular/css/ionic-swiper';
 

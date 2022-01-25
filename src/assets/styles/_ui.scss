@@ -1,4 +1,10 @@
-.la-avatar {
-  overflow: hidden;
+.icon-button::part(native) {
+  padding: 0;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

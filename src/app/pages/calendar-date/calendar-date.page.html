@@ -1,9 +1,78 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>calendar-date</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="date-calendar">
+    <div class="calendar-top">
+      <ion-button fill="clear" class="icon-button" (click)="prevDate()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
 
+      <div class="month-year">
+        <ion-button fill="clear" class="flat-button">
+          <ion-label>Tháng {{solarDate.month}}</ion-label>
+        </ion-button>
+        <div class="seperator">-</div>
+        <ion-button fill="clear" class="flat-button">
+          <ion-label>Năm {{solarDate.year}}</ion-label>
+        </ion-button>
+      </div>
+
+      <ion-button fill="clear" class="icon-button" (click)="nextDate()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="calendar-middle">
+      <div class="today">
+        <ion-button fill="clear" class="flat-button"
+          *ngIf="!solarDate.isToday"
+          (click)="today()"
+        >
+          <ion-label>Hôm nay</ion-label>
+        </ion-button>
+      </div>
+
+      <div class="center column">
+        <div class="date">
+          {{solarDate.date}}
+        </div>
+
+        <div class="week-day">
+          {{solarDate.dayInWeek}}
+        </div>
+      </div>
+
+      <div class="center column">
+        <div class="holiday" *ngIf="solarDate.holiday">
+          {{solarDate.holiday}}
+        </div>
+
+        <div class="holiday" *ngIf="lunarDate.holiday">
+          {{lunarDate.holiday}}
+        </div>
+
+        <div class="quote" *ngIf="quote">
+          {{quote}}
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-bottom">
+      <div class="column">
+        <div class="bold">Năm {{lunarDate.lunarYear.toString()}}</div>
+        <div>Tháng {{lunarDate.lunarMonth.toString()}}</div>
+        <div>Ngày {{lunarDate.lunarDate.toString()}}</div>
+        <div>Giờ {{lunarDate.lunarHour.toString()}}</div>
+      </div>
+
+      <div class="column center">
+        <div class="date">{{lunarDate.date}}</div>
+        <div class="month">Thang gieng</div>
+      </div>
+
+      <div class="column">
+        <div>Tiết {{lunarDate.solarTerm}}</div>
+        <div class="bold">Giờ hoàng đạo</div>
+        <div>{{lunarDate.luckyHours}}</div>
+      </div>
+    </div>
+  </div>
 </ion-content>
