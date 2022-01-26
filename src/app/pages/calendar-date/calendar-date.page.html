@@ -1,33 +1,46 @@
 <ion-content>
-  <div class="date-calendar">
+  <div class="date-calendar"
+       (swiperight)="prevDate()"
+       (swipeleft)="nextDate()">
     <div class="calendar-top">
       <ion-button fill="clear" class="icon-button" (click)="prevDate()">
-        <ion-icon name="arrow-back"></ion-icon>
+        <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
 
       <div class="month-year">
-        <ion-button fill="clear" class="flat-button">
+        <ion-button fill="clear" class="flat-button" (click)="selectMonth()">
           <ion-label>Tháng {{solarDate.month}}</ion-label>
         </ion-button>
+
         <div class="seperator">-</div>
-        <ion-button fill="clear" class="flat-button">
+
+        <ion-button fill="clear" class="flat-button"(click)="selectYear()">
           <ion-label>Năm {{solarDate.year}}</ion-label>
         </ion-button>
       </div>
 
       <ion-button fill="clear" class="icon-button" (click)="nextDate()">
-        <ion-icon name="arrow-forward"></ion-icon>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </div>
 
     <div class="calendar-middle">
-      <div class="today">
-        <ion-button fill="clear" class="flat-button"
-          *ngIf="!solarDate.isToday"
-          (click)="today()"
-        >
-          <ion-label>Hôm nay</ion-label>
-        </ion-button>
+      <div class="calendar-actions">
+        <div>
+          <ion-button fill="clear" class="flat-button"
+            *ngIf="!solarDate.isToday"
+            (click)="today()"
+          >
+            <ion-label>Hôm nay</ion-label>
+          </ion-button>
+        </div>
+
+        <div>
+          <div class="vegetarian" *ngIf="lunarDate.isVegetarianDay">
+            <img src="/assets/images/buddha.png">
+            <div>Ngày ăn chay</div>
+          </div>
+        </div>
       </div>
 
       <div class="center column">
@@ -36,7 +49,7 @@
         </div>
 
         <div class="week-day">
-          {{solarDate.dayInWeek}}
+          {{weekDaysMap[this.solarDate.dayInWeek]}}
         </div>
       </div>
 
@@ -65,7 +78,7 @@
 
       <div class="column center">
         <div class="date">{{lunarDate.date}}</div>
-        <div class="month">Thang gieng</div>
+        <div class="month">{{monthsMap[lunarDate.month]}}</div>
       </div>
 
       <div class="column">

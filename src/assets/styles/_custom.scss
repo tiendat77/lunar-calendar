@@ -15,6 +15,16 @@ ion-button {
   text-transform: none;
 }
 
-ion-label {
-  font-family: 'Montserrat', sans-serif !important;
+.alert-form .alert-wrapper {
+  --max-height: 450px;
+  --min-width: 280px;
+  font-size: 16px;
+}
+
+.alert-form .alert-radio {
+  padding: 2px 6px;
+}
+
+.alert-form .alert-radio-group {
+  max-height: unset;
 }

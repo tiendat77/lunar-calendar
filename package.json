@@ -29,10 +29,12 @@
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
     "core-js": "^3.20.3",
+    "hammerjs": "^2.0.8",
+    "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "~6.6.0",
     "swiper": "^7.4.1",
     "tslib": "^2.2.0",
-    "vietnamese-lunar-calendar": "0.0.4",
+    "vietnamese-lunar-calendar": "0.0.5",
     "webdriver-manager": "^12.1.8",
     "zone.js": "~0.11.4"
   },

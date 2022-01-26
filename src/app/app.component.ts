@@ -2,14 +2,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 
+/* Ionic */
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 
+/* Natives */
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Storage } from '@ionic/storage';
-
+/* Services */
 import { UserData } from './providers/user-data';
+import { StorageService } from './providers/storage.service';
+
+import { APP_TABS } from './constants/app-tabs.constant';
 
 @Component({
   selector: 'app-root',
@@ -19,44 +23,30 @@ import { UserData } from './providers/user-data';
 })
 export class AppComponent implements OnInit {
 
-  appPages = [
-    {
-      title: 'Date',
-      url: '/app/tabs/date',
-      icon: 'calendar'
-    },
-    {
-      title: 'Month',
-      url: '/app/tabs/month',
-      icon: 'people'
-    },
-    {
-      title: 'Settings',
-      url: '/app/tabs/settings',
-      icon: 'map'
-    }
-  ];
-  loggedIn = false;
   dark = false;
+  loggedIn = false;
+  appPages = APP_TABS;
 
   constructor(
-    private menu: MenuController,
-    private platform: Platform,
     private router: Router,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private storage: Storage,
-    private userData: UserData,
+    private platform: Platform,
+
     private swUpdate: SwUpdate,
+    private menu: MenuController,
     private toastCtrl: ToastController,
+
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private storage: StorageService,
+
+    private userData: UserData,
   ) {
-    this.initializeApp();
+    this.platform.ready().then(() => {
+      this.initializeApp();
+    });
   }
 
   async ngOnInit() {
-    this.checkLoginStatus();
-    this.listenForLoginEvents();
-
     this.swUpdate.available.subscribe(async res => {
       const toast = await this.toastCtrl.create({
         message: 'Update available!',
@@ -78,11 +68,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+  async initializeApp() {
+    this.statusBar.styleDefault();
+    this.splashScreen.hide();
+    await this.storage.init();
+
+    this.checkLoginStatus();
+    this.listenForLoginEvents();
   }
 
   checkLoginStatus() {
@@ -113,7 +105,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
+      return this.router.navigateByUrl('/app/tabs/date');
     });
   }
 
@@ -122,7 +114,5 @@ export class AppComponent implements OnInit {
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
   }
-
-
 
 }

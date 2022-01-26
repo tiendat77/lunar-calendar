@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import { StorageService } from './storage.service';
 
 @Injectable({providedIn: 'root'})
 export class UserData {
@@ -8,7 +8,7 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
   constructor(
-    public storage: Storage
+    public storage: StorageService
   ) { }
 
   hasFavorite(sessionName: string): boolean {
