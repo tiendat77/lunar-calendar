@@ -1,0 +1,9 @@
+{
+	"appId": "com.tiendathuynh.lunarcalendar",
+	"appName": "Âm Lịch Việt",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"LocalNotifications": {}
+	}
+}

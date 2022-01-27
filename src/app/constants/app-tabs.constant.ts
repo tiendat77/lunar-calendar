@@ -1,17 +1,17 @@
 export const APP_TABS = [
   {
-    title: 'Date',
-    url: '/app/tabs/date',
-    icon: 'calendar'
+    title: 'Ngày',
+    url: '/tabs/date',
+    icon: 'calendar-date'
   },
   {
-    title: 'Month',
-    url: '/app/tabs/month',
-    icon: 'people'
+    title: 'Tháng',
+    url: '/tabs/month',
+    icon: 'calendar-month'
   },
   {
-    title: 'Settings',
-    url: '/app/tabs/settings',
-    icon: 'map'
+    title: 'Tiện ích',
+    url: '/tabs/settings',
+    icon: 'settings-outline'
   }
 ];

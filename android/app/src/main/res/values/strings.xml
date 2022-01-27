@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Âm Lịch Việt</string>
+    <string name="title_activity_main">Âm Lịch Việt</string>
+    <string name="package_name">com.tiendathuynh.lunarcalendar</string>
+    <string name="custom_url_scheme">com.tiendathuynh.lunarcalendar</string>
+</resources>

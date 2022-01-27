@@ -6,11 +6,12 @@ import { SwUpdate } from '@angular/service-worker';
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 
 /* Natives */
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 /* Services */
 import { UserData } from './providers/user-data';
+import { NotifyService } from './providers/notify.service';
 import { StorageService } from './providers/storage.service';
 
 import { APP_TABS } from './constants/app-tabs.constant';
@@ -37,9 +38,10 @@ export class AppComponent implements OnInit {
 
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private storage: StorageService,
 
     private userData: UserData,
+    private notify: NotifyService,
+    private storage: StorageService,
   ) {
     this.platform.ready().then(() => {
       this.initializeApp();
