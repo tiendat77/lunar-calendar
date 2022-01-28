@@ -11,6 +11,10 @@ ion-header::after {
   content: none !important;
 }
 
+ion-content {
+  padding-top: var(--ion-safe-area-top);
+}
+
 ion-button {
   text-transform: none;
 }

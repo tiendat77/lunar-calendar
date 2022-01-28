@@ -3,7 +3,7 @@
   "short_name": "Âm lịch",
   "theme_color": "transparent",
   "background_color": "transparent",
-  "display": "fullscreen",
+  "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "icons": [

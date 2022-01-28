@@ -1,9 +1,123 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>calendar-month</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="calendar-month">
+    <div class="calendar-top">
+      <div class="month-year">
+        <div class="row center">
+          <ion-button fill="clear" class="icon-button" (click)="prevMonth()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
 
+          <ion-button fill="clear" class="month flat-button" (click)="selectMonth()">
+            <ion-label>{{monthsMap[month]}}</ion-label>
+          </ion-button>
+
+          <ion-button fill="clear" class="icon-button" (click)="nextMonth()">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="row center">
+          <ion-button fill="clear" class="icon-button" (click)="prevYear()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button fill="clear" class="flat-button"(click)="selectYear()">
+            <ion-label>{{year}}</ion-label>
+          </ion-button>
+
+          <ion-button fill="clear" class="icon-button" (click)="nextYear()">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <div class="seperator"></div>
+
+      <table class="vn-calendar"
+        (swiperight)="prevMonth()"
+        (swipeleft)="nextMonth()"
+      >
+        <thead>
+          <tr>
+            <th *ngFor="let weekday of weekdays">
+              {{weekday}}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let week of calendar.weeks">
+            <td *ngFor="let day of week"
+              [class.sun]="day.solar.dayInWeek === 0"
+              [class.disable]="day.isDisabled"
+              [class.active]="isActive(day)"
+              (click)="selectDate(day)"
+            >
+              <div class="vn-day">
+                <div class="solar">
+                  {{day.solar.date}}
+                </div>
+                <div class="lunar">
+                  <span>{{day.lunar.date}}</span>
+                  <span *ngIf="day.lunar.date === 1">/{{day.lunar.month}}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="calendar-bottom ">
+      <table class="solar-lunar">
+        <tr>
+          <td class="header">Dương Lịch</td>
+          <td class="header">Âm Lịch</td>
+        </tr>
+        <tr>
+          <td>Tháng {{selected.solar.month}} Năm {{selected.solar.year}}</td>
+          <td>Tháng {{selected.lunar.month}} Năm {{selected.lunar.lunarYear.toString()}}</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="column center">
+              <div class="date">
+                {{selected.solar.date}}
+              </div>
+
+              <div class="weekday">
+                {{weekdaysMap[selected.solar.dayInWeek]}}
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <div class="column center">
+              <div class="date">
+                {{selected.lunar.date}}
+              </div>
+
+              <div>
+                <span>
+                  Ngày <strong>{{selected.lunar.lunarDate.toString()}}</strong>,
+                </span>
+                <span>
+                  Tháng <strong>{{selected.lunar.lunarMonth.toString()}}</strong>
+                </span>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="header">Giờ hoàng đạo</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            {{selected.lunar.luckyHours}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </ion-content>

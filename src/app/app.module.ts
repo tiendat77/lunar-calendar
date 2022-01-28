@@ -25,7 +25,10 @@ import { environment } from '../environments/environment';
     BrowserModule,
     HammerModule,
     AppRoutingModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'ios',
+      _forceStatusbarPadding: true,
+    }),
     IonicStorageModule.forRoot({
       driverOrder: [
         CordovaSQLiteDriver._driver,

@@ -1,5 +1,7 @@
 <ion-content>
   <div class="date-calendar"
+       [class.sat]="solarDate.dayInWeek === 6"
+       [class.sun]="solarDate.dayInWeek === 0"
        (swiperight)="prevDate()"
        (swipeleft)="nextDate()">
     <div class="calendar-top">
@@ -73,7 +75,6 @@
         <div class="bold">Năm {{lunarDate.lunarYear.toString()}}</div>
         <div>Tháng {{lunarDate.lunarMonth.toString()}}</div>
         <div>Ngày {{lunarDate.lunarDate.toString()}}</div>
-        <div>Giờ {{lunarDate.lunarHour.toString()}}</div>
       </div>
 
       <div class="column center">
@@ -82,9 +83,15 @@
       </div>
 
       <div class="column">
+        <div>Giờ {{lunarDate.lunarHour.toString()}}</div>
         <div>Tiết {{lunarDate.solarTerm}}</div>
-        <div class="bold">Giờ hoàng đạo</div>
-        <div>{{lunarDate.luckyHours}}</div>
+        <div style="height: 1rem;"></div>
+      </div>
+    </div>
+
+    <div class="lucky-hours">
+      <div>
+        <strong>Giờ hoàng đạo:</strong> {{lunarDate.luckyHours}}
       </div>
     </div>
   </div>
