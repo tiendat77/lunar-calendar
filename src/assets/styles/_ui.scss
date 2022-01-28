@@ -1,3 +1,8 @@
+.icon-button {
+  width: 40px;
+  height: 40px;
+}
+
 .icon-button::part(native) {
   padding: 0;
   width: 40px;
@@ -5,6 +10,56 @@
   border-radius: 50%;
 
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button::part(native), .flat-button::part(native) {
+  color: currentColor;
+  background-color: transparent;
+}
+
+.card {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: #fff;
+
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  .card-header {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+}
+
+.tab-container {
+  width: 100%;
+  padding: 12px;
+
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: space-between;
+
+  font-size: 1rem;
+}
+
+// flex layout
+.row.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.column.center {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

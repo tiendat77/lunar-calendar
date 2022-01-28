@@ -16,7 +16,19 @@ ion-content {
 }
 
 ion-button {
+  color: currentColor;
   text-transform: none;
+}
+
+ion-tab-bar {
+  height: 70px;
+
+  ion-tab-button {
+    ion-label {
+      font-size: 14px;
+      margin-top: 3px;
+    }
+  }
 }
 
 .alert-form .alert-wrapper {

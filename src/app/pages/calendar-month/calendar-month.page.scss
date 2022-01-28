@@ -5,32 +5,7 @@ ion-content {
   background-color: #f4f6f6;
 }
 
-.calendar-month {
-  width: 100%;
-  padding: 10px;
-  padding-bottom: 0;
-
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  justify-content: space-between;
-
-  font-size: 1rem;
-}
-
-.calendar-top, .calendar-bottom {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  overflow: hidden;
-  border-radius: 6px;
-  background-color: #fff;
-}
-
-.calendar-top {
+.calendar {
   padding: 4px 16px;
 
   .month-year {
@@ -61,42 +36,17 @@ ion-content {
   .flat-button::part(native) {
     padding: 0;
     font-size: 1rem;
-    color: currentColor;
-    background-color: transparent;
-  }
-
-  .icon-button {
-    width: 40px;
-    height: 40px;
   }
 
   .icon-button::part(native) {
     font-size: 1rem;
     color: #8d8d8d;
   }
-
-  ion-button {
-    color: currentColor;
-  }
 }
 
-.calendar-bottom {
+.block {
+  padding: 0;
   margin-top: 1rem;
-}
-
-// flex layout
-.row.center {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.column.center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 // calendar table
@@ -140,11 +90,11 @@ table.vn-calendar {
   }
 
   .solar {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .lunar {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   .disable {

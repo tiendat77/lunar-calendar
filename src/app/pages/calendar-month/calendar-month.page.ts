@@ -50,7 +50,6 @@ export class CalendarMonthPage {
     }
 
     this.calendar = new Calendar(this.year, this.month);
-    this.findToday();
   }
 
   private findToday() {
@@ -116,6 +115,12 @@ export class CalendarMonthPage {
 
   selectDate(day: CalendarDay) {
     this.selected = day;
+
+    if (this.selected.solar.month !== this.month) {
+      this.month = this.selected.solar.month;
+      this.year = this.selected.solar.year;
+      this.refresh();
+    }
   }
 
   async selectMonth() {

@@ -1,6 +1,6 @@
 <ion-content>
-  <div class="calendar-month">
-    <div class="calendar-top">
+  <div class="tab-container">
+    <div class="calendar card">
       <div class="month-year">
         <div class="row center">
           <ion-button fill="clear" class="icon-button" (click)="prevMonth()">
@@ -68,7 +68,7 @@
       </table>
     </div>
 
-    <div class="calendar-bottom ">
+    <div class="block card">
       <table class="solar-lunar">
         <tr>
           <td class="header">Dương Lịch</td>
@@ -108,7 +108,11 @@
             </div>
           </td>
         </tr>
+      </table>
+    </div>
 
+    <div class="block card">
+      <table class="solar-lunar">
         <tr>
           <td colspan="2" class="header">Giờ hoàng đạo</td>
         </tr>

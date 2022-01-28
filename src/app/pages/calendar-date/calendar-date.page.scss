@@ -1,70 +1,33 @@
-.date-calendar {
-  width: 100%;
-  height: 100%;
-  padding: 1rem;
-  padding-bottom: 0;
-
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  justify-content: space-between;
-
-  font-size: 1rem;
-  color: #000;
+ion-content {
+  background-color: #f4f6f6;
 }
 
-.sat {
-  color: #4272ff;
-}
+.solar-lunar {
+  padding: 10px;
+  font-size: 0.9rem;
 
-.sun {
-  color: #ff4343;
-}
+  .toolbar {
+    width: 100%;
+    flex: 1 1 100%;
+    max-height: 56px;
 
-.calendar-top {
-  flex: 1 1 100%;
-  max-height: 56px;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  .month-year {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-  }
+    justify-content: space-between;
 
-  .seperator {
-    margin-left: 6px;
-    margin-right: 6px;
-  }
-}
+    .month-year {
+      display: flex;
+      flex: 1 1 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
 
-.calendar-middle {
-  flex: 1 1 100%;
-  max-height: 60%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  .date {
-    font-size: 7rem;
-    font-weight: bolder;
-  }
-
-  .week-day {
-    font-size: 2rem;
-    margin-top: 0.5rem;
-    font-weight: bolder;
-  }
-
-  .holiday, .quote {
-    margin-bottom: 1rem;
+    .seperator {
+      margin-left: 6px;
+      margin-right: 6px;
+    }
   }
 
   .vegetarian {
@@ -85,85 +48,91 @@
       line-height: 24px;
     }
   }
-}
 
-.calendar-bottom {
-  // flex: 1 1 1e-09px;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: space-between;
-
-  .column {
+  .solar-date {
     flex: 1 1 100%;
-    max-width: 33.33%;
+    width: 100%;
+    padding: 2rem 0;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
-    text-align: center;
-
-    div {
-      max-width: 100%;
+    .date {
+      font-size: 7rem;
+      font-weight: bolder;
     }
 
-    & > div:not(:last-child) {
-      margin-bottom: 0.5rem;
+    .week-day {
+      font-size: 2rem;
+      margin-top: 0.5rem;
+      font-weight: bolder;
+    }
+
+    .holiday, .quote {
+      margin-bottom: 1rem;
     }
   }
 
-  .center {
-    padding: 0 8px;
-  }
+  .lunar-date {
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
 
-  .bold {
-    font-weight: bold;
-  }
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
 
-  .date {
-    font-size: 3rem;
-    font-weight: 500;
+    .column {
+      flex: 1 1 100%;
+      max-width: 33.33%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+
+      div {
+        max-width: 100%;
+      }
+
+      & > div:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .center {
+      padding: 0 8px;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .date {
+      font-size: 3rem;
+      font-weight: 500;
+    }
+
+    .month {
+      font-size: 0.9rem;
+    }
   }
+}
+
+.sat {
+  color: #4272ff;
+}
+
+.sun {
+  color: #ff4343;
 }
 
 .lucky-hours {
-  width: 100%;
-  font-size: 0.8rem;
-  padding-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 10px 16px;
 }
 
-.calendar-actions {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &.column {
-    flex-direction: column;
-  }
-
-  &.row {
-    flex-direction: row;
-  }
-}
-
-.icon-button::part(native), .flat-button::part(native) {
-  color: currentColor;
-  background-color: transparent;
-}
-
-ion-button {
-  color: currentColor;
-}
