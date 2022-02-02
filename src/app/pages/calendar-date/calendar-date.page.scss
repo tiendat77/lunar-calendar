@@ -9,6 +9,7 @@ ion-content {
   .toolbar {
     width: 100%;
     flex: 1 1 100%;
+    min-height: 56px;
     max-height: 56px;
 
     display: flex;
@@ -87,13 +88,14 @@ ion-content {
 
     .column {
       flex: 1 1 100%;
-      max-width: 33.33%;
+      overflow: visible;
 
       display: flex;
       flex-direction: column;
       align-items: center;
 
       text-align: center;
+      white-space: nowrap;
 
       div {
         max-width: 100%;
@@ -113,13 +115,20 @@ ion-content {
     }
 
     .date {
-      font-size: 3rem;
+      font-size: 2rem;
       font-weight: 500;
     }
 
     .month {
       font-size: 0.9rem;
     }
+  }
+
+  .quote-holiday {
+    min-height: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -135,4 +144,3 @@ ion-content {
   margin-top: 1rem;
   padding: 10px 16px;
 }
-

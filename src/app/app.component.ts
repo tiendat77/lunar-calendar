@@ -3,16 +3,24 @@ import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 
 /* Ionic */
-import { MenuController, Platform, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  MenuController,
+  ModalController,
+  Platform,
+  ToastController
+} from '@ionic/angular';
 
 /* Natives */
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { App } from '@capacitor/app';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 /* Services */
 import { UserData } from './providers/user-data';
 import { NotifyService } from './providers/notify.service';
 import { StorageService } from './providers/storage.service';
+import { CalendarService } from './providers/calendar.service';
 
 import { APP_TABS } from './constants/app-tabs.constant';
 
@@ -34,12 +42,12 @@ export class AppComponent implements OnInit {
 
     private swUpdate: SwUpdate,
     private menu: MenuController,
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
     private toastCtrl: ToastController,
 
-    private statusBar: StatusBar,
-    private splashScreen: SplashScreen,
-
     private userData: UserData,
+    private calendar: CalendarService,
     private notify: NotifyService,
     private storage: StorageService,
   ) {
@@ -71,13 +79,16 @@ export class AppComponent implements OnInit {
   }
 
   async initializeApp() {
-    this.statusBar.backgroundColorByHexString('#f4f6f6');
-    this.statusBar.styleDefault();
-    this.splashScreen.hide();
+    StatusBar.setBackgroundColor({color: '#f4f6f6'});
+    StatusBar.setStyle({style: Style.Light});
+    SplashScreen.hide();
+
     await this.storage.init();
+    this.calendar.remindVegetarianDays();
 
     this.checkLoginStatus();
     this.listenForLoginEvents();
+    this.fuckIonic();
   }
 
   checkLoginStatus() {
@@ -116,6 +127,42 @@ export class AppComponent implements OnInit {
     this.menu.enable(false);
     this.storage.set('ion_did_tutorial', false);
     this.router.navigateByUrl('/tutorial');
+  }
+
+  private fuckIonic() {
+    window.addEventListener('ionAlertDidPresent', e => {
+      const selected = (e.target as HTMLElement).querySelector('[aria-checked="true"]');
+      selected && selected.scrollIntoView();
+    });
+
+    this.platform.backButton.subscribeWithPriority(5, () => {
+      this.exit();
+    });
+
+    App.addListener('backButton', () => {
+      this.modalCtrl.dismiss();
+    });
+  }
+
+  private async exit() {
+    const alert = await this.alertCtrl.create({
+      header: 'Thoát ứng dụng?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Hủy',
+          role: 'cancel'
+        },
+        {
+          text: 'Đồng ý',
+          handler: () => {
+            App.exitApp();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

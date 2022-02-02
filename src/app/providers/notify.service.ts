@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { random } from 'lodash';
+import { LunarDate, SolarDate } from 'vietnamese-lunar-calendar';
+import { MONTHS_MAP } from '../constants/mapper.constant';
 
 @Injectable({providedIn: 'root'})
 export class NotifyService {
@@ -13,11 +13,26 @@ export class NotifyService {
       notifications: [
         {
           title: 'Âm lịch Việt',
-          body: 'Hôm nay là ngày: ',
+          body: 'Ding dong',
           id: new Date().getDate(),
-          // schedule: {
-          //   at,
-          // },
+        },
+      ],
+    });
+  }
+
+  async schedule(solarDate: SolarDate, lunarDate: LunarDate) {
+    const message = `Hôm nay là ngày ${lunarDate.date} tháng ${MONTHS_MAP[lunarDate.month]}\nHãy nhớ ăn chay bạn nhé!`;
+    const date = new Date(solarDate.year, solarDate.month - 1, solarDate.date);
+
+    LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Ngày ăn chay',
+          body: message,
+          id: date.getDate(),
+          schedule: {
+            at: date,
+          },
         },
       ],
     });

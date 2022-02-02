@@ -1,113 +1,120 @@
 <ion-content>
-  <div class="tab-container">
-    <div class="solar-lunar card"
-      [class.sat]="solarDate.dayInWeek === 6"
-      [class.sun]="solarDate.dayInWeek === 0"
-      (swiperight)="prevDate()"
-      (swipeleft)="nextDate()"
-    >
-      <div class="toolbar">
-        <ion-button fill="clear" class="icon-button" (click)="prevDate()">
-          <ion-icon name="chevron-back-outline"></ion-icon>
-        </ion-button>
+  <swiper
+    #swiper
+    [loop]="true"
+    [spaceBetween]="20"
+    (slideChange)="onSlideChange($event)"
+  >
+    <ng-template swiperSlide *ngFor="let day of days; trackBy: trackByIndex">
+      <div class="tab-container">
+        <div class="solar-lunar card"
+          [class.sat]="day.solarDate.dayInWeek === 6"
+          [class.sun]="day.solarDate.dayInWeek === 0"
+        >
+          <div class="toolbar">
+            <ion-button fill="clear" class="icon-button" (click)="prevDay()">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </ion-button>
 
-        <div class="month-year">
-          <ion-button fill="clear" class="flat-button"
-            style="flex-basis: 100%;"
-            (click)="selectMonth()"
-          >
-            <ion-label>Tháng {{solarDate.month}}</ion-label>
-          </ion-button>
+            <div class="month-year">
+              <ion-button fill="clear" class="flat-button"
+                style="flex-basis: 100%;"
+                (click)="selectMonth()"
+              >
+                <ion-label>Tháng {{day.solarDate.month}}</ion-label>
+              </ion-button>
 
-          <div class="seperator">-</div>
+              <div class="seperator">-</div>
 
-          <ion-button fill="clear" class="flat-button"
-            style="flex-basis: 100%;"
-            (click)="selectYear()"
-          >
-            <ion-label>Năm {{solarDate.year}}</ion-label>
-          </ion-button>
-        </div>
+              <ion-button fill="clear" class="flat-button"
+                style="flex-basis: 100%;"
+                (click)="selectYear()"
+              >
+                <ion-label>Năm {{day.solarDate.year}}</ion-label>
+              </ion-button>
+            </div>
 
-        <ion-button fill="clear" class="icon-button" (click)="nextDate()">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </div>
-
-      <div class="toolbar">
-        <div>
-          <ion-button fill="clear" class="flat-button"
-            *ngIf="!solarDate.isToday"
-            (click)="today()"
-          >
-            <ion-label>Hôm nay</ion-label>
-          </ion-button>
-        </div>
-
-        <div>
-          <ion-button fill="clear" class="flat-button"
-            *ngIf="lunarDate.isVegetarianDay"
-          >
-            <ion-icon slot="start" name="buddha"></ion-icon>
-            <ion-label>Ngày ăn chay</ion-label>
-          </ion-button>
-        </div>
-      </div>
-
-      <div class="solar-date">
-        <div class="center column">
-          <div class="date">
-            {{solarDate.date}}
+            <ion-button fill="clear" class="icon-button" (click)="nextDay()">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
           </div>
 
-          <div class="week-day">
-            {{weekDaysMap[this.solarDate.dayInWeek]}}
+          <div class="toolbar">
+            <div>
+              <ion-button fill="clear" class="flat-button"
+                *ngIf="!day.solarDate.isToday"
+                (click)="today()"
+              >
+                <ion-label>Hôm nay</ion-label>
+              </ion-button>
+            </div>
+
+            <div>
+              <ion-button fill="clear" class="flat-button"
+                *ngIf="day.lunarDate.isVegetarianDay"
+              >
+                <ion-icon slot="start" name="buddha"></ion-icon>
+                <ion-label>Ngày ăn chay</ion-label>
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="solar-date">
+            <div class="center column">
+              <div class="date">
+                {{day.solarDate.date}}
+              </div>
+
+              <div class="week-day">
+                {{weekDaysMap[day.solarDate.dayInWeek]}}
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-holiday">
+            <div class="holiday" *ngIf="day.solarDate.holiday">
+              {{day.solarDate.holiday}}
+            </div>
+
+            <div class="holiday" *ngIf="day.lunarDate.holiday">
+              {{day.lunarDate.holiday}}
+            </div>
+
+            <div class="quote" *ngIf="quote">
+              {{quote}}
+            </div>
+          </div>
+
+          <div class="lunar-date">
+            <div class="column">
+              <div class="bold">Năm {{day.lunarDate.lunarYear.toString()}}</div>
+              <div>Tháng {{day.lunarDate.lunarMonth.toString()}}</div>
+              <div>Ngày {{day.lunarDate.lunarDate.toString()}}</div>
+            </div>
+
+            <div class="column center">
+              <div class="date">{{day.lunarDate.date}}</div>
+              <div class="month">{{monthsMap[day.lunarDate.month]}}</div>
+            </div>
+
+            <div class="column">
+              <div>Giờ {{day.lunarDate.lunarHour.toString()}}</div>
+              <div>Tiết {{day.lunarDate.solarTerm}}</div>
+              <div style="height: 1rem;"></div>
+            </div>
           </div>
         </div>
 
-        <div class="center column">
-          <div class="holiday" *ngIf="solarDate.holiday">
-            {{solarDate.holiday}}
+        <div class="lucky-hours card">
+          <div class="card-header">
+            <strong>Giờ hoàng đạo</strong>
           </div>
 
-          <div class="holiday" *ngIf="lunarDate.holiday">
-            {{lunarDate.holiday}}
-          </div>
-
-          <div class="quote" *ngIf="quote">
-            {{quote}}
+          <div class="card-body">
+            {{day.lunarDate.luckyHours}}
           </div>
         </div>
       </div>
-
-      <div class="lunar-date">
-        <div class="column">
-          <div class="bold">Năm {{lunarDate.lunarYear.toString()}}</div>
-          <div>Tháng {{lunarDate.lunarMonth.toString()}}</div>
-          <div>Ngày {{lunarDate.lunarDate.toString()}}</div>
-        </div>
-
-        <div class="column center">
-          <div class="date">{{lunarDate.date}}</div>
-          <div class="month">{{monthsMap[lunarDate.month]}}</div>
-        </div>
-
-        <div class="column">
-          <div>Giờ {{lunarDate.lunarHour.toString()}}</div>
-          <div>Tiết {{lunarDate.solarTerm}}</div>
-          <div style="height: 1rem;"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lucky-hours card">
-      <div class="card-header">
-        <strong>Giờ hoàng đạo</strong>
-      </div>
-
-      <div class="card-body">
-        {{lunarDate.luckyHours}}
-      </div>
-    </div>
-  </div>
+    </ng-template>
+  </swiper>
 </ion-content>

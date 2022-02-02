@@ -16,9 +16,9 @@ function genMonths() {
 
 function genYears() {
   const years: AlertInput[] = [];
-  const now = new Date().getFullYear() + 90;
+  const now = new Date().getFullYear();
 
-  for (let i = now - 100; i <= now; i++) {
+  for (let i = now - 100; i <= 2100; i++) {
     years.push({
       value: i,
       label: 'Năm ' + i,

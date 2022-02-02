@@ -9,7 +9,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 
 /* Native Modules */
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
@@ -47,7 +46,6 @@ import { environment } from '../environments/environment';
     AppComponent
   ],
   providers: [
-    StatusBar,
     InAppBrowser,
     SplashScreen,
     {
