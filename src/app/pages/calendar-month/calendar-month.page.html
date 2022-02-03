@@ -1,74 +1,84 @@
 <ion-content>
-  <div class="tab-container">
-    <div class="calendar card">
-      <div class="month-year">
-        <div class="row center">
-          <ion-button fill="clear" class="icon-button" (click)="prevMonth()">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-          </ion-button>
+  <swiper
+    #swiper
+    [loop]="true"
+    [spaceBetween]="20"
+    (slideChange)="onSlideChange($event)"
+  >
+    <ng-template swiperSlide *ngFor="let calendar of calendars; trackBy: trackByIndex">
+      <div class="tab-container" style="padding-bottom: 0;">
+        <div class="calendar card">
+          <div class="month-year">
+            <div class="row center">
+              <ion-button fill="clear" class="icon-button" (click)="prevMonth()">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+              </ion-button>
 
-          <ion-button fill="clear" class="month flat-button" (click)="selectMonth()">
-            <ion-label>{{monthsMap[month]}}</ion-label>
-          </ion-button>
+              <ion-button fill="clear" class="month flat-button" (click)="selectMonth()">
+                <ion-label>{{monthsMap[month]}}</ion-label>
+              </ion-button>
 
-          <ion-button fill="clear" class="icon-button" (click)="nextMonth()">
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
-        </div>
+              <ion-button fill="clear" class="icon-button" (click)="nextMonth()">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+            </div>
 
-        <div class="row center">
-          <ion-button fill="clear" class="icon-button" (click)="prevYear()">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-          </ion-button>
+            <div class="row center">
+              <ion-button fill="clear" class="icon-button" (click)="prevYear()">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+              </ion-button>
 
-          <ion-button fill="clear" class="flat-button"(click)="selectYear()">
-            <ion-label>{{year}}</ion-label>
-          </ion-button>
+              <ion-button fill="clear" class="flat-button"(click)="selectYear()">
+                <ion-label>{{year}}</ion-label>
+              </ion-button>
 
-          <ion-button fill="clear" class="icon-button" (click)="nextYear()">
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
+              <ion-button fill="clear" class="icon-button" (click)="nextYear()">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="seperator"></div>
+
+          <table class="vn-calendar">
+            <thead>
+              <tr>
+                <th *ngFor="let weekday of weekdays">
+                  {{weekday}}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let week of calendar.weeks">
+                <td *ngFor="let day of week"
+                  [class.sun]="day.solar.dayInWeek === 0"
+                  [class.disable]="day.isDisabled"
+                  [class.active]="isActive(day)"
+                  (click)="selectDate(day)"
+                >
+                  <div class="vn-day">
+                    <div class="dot" *ngIf="day.lunar.isVegetarianDay">
+                    </div>
+                    <div class="solar">
+                      {{day.solar.date}}
+                    </div>
+                    <div class="lunar">
+                      <span>{{day.lunar.date}}</span>
+                      <span *ngIf="day.lunar.date === 1">/{{day.lunar.month}}</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+    </ng-template>
+  </swiper>
 
-      <div class="seperator"></div>
-
-      <table class="vn-calendar"
-        (swiperight)="prevMonth()"
-        (swipeleft)="nextMonth()"
-      >
-        <thead>
-          <tr>
-            <th *ngFor="let weekday of weekdays">
-              {{weekday}}
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let week of calendar.weeks">
-            <td *ngFor="let day of week"
-              [class.sun]="day.solar.dayInWeek === 0"
-              [class.disable]="day.isDisabled"
-              [class.active]="isActive(day)"
-              (click)="selectDate(day)"
-            >
-              <div class="vn-day">
-                <div class="solar">
-                  {{day.solar.date}}
-                </div>
-                <div class="lunar">
-                  <span>{{day.lunar.date}}</span>
-                  <span *ngIf="day.lunar.date === 1">/{{day.lunar.month}}</span>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="block card">
+  <div class="tab-container" style="padding-top: 0;">
+    <div class="card" style="padding: 0; margin-top: 1rem;" *ngIf="selected">
       <table class="solar-lunar">
         <tr>
           <td class="header">Dương Lịch</td>
@@ -115,17 +125,21 @@
       </table>
     </div>
 
-    <div class="block card">
-      <table class="solar-lunar">
-        <tr>
-          <td colspan="2" class="header">Giờ hoàng đạo</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            {{selected.lunar.luckyHours}}
-          </td>
-        </tr>
-      </table>
+    <div class="card" style="margin-top: 1rem;" *ngIf="selected">
+      <div class="card-header">
+        <strong>Giờ hoàng đạo</strong>
+      </div>
+
+      <div class="card-body">
+        {{selected.lunar.luckyHours}}
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;" *ngIf="selected?.lunar.isVegetarianDay">
+      <div class="card-header">Ngày ăn chay</div>
+      <div class="card-body">
+        Hãy nhớ ăn chay và thương yêu mọi người, bạn nhé! („• ֊ •„)
+      </div>
     </div>
   </div>
 </ion-content>

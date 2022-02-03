@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotifyService } from 'src/app/providers/notify.service';
+import { LunarDate, SolarDate } from 'vietnamese-lunar-calendar';
 
 @Component({
   selector: 'app-settings',
@@ -14,7 +15,8 @@ export class SettingsPage implements OnInit {
   }
 
   schedule() {
-    this.notify.push();
+    const date = new Date();
+    this.notify.test(new SolarDate(date), new LunarDate(date));
   }
 
 }

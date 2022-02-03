@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   plugins: {
     LocalNotifications: {
-      smallIcon: 'ic_buddha'
+      smallIcon: 'ic_buddha',
     },
   },
 };

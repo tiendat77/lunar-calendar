@@ -4,6 +4,8 @@
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"plugins": {
-		"LocalNotifications": {}
+		"LocalNotifications": {
+			"smallIcon": "ic_buddha"
+		}
 	}
 }

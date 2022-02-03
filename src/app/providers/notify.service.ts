@@ -20,9 +20,10 @@ export class NotifyService {
     });
   }
 
-  async schedule(solarDate: SolarDate, lunarDate: LunarDate) {
-    const message = `Hôm nay là ngày ${lunarDate.date} tháng ${MONTHS_MAP[lunarDate.month]}\nHãy nhớ ăn chay bạn nhé!`;
+  async schedule(solarDate: SolarDate, lunarDate: LunarDate,) {
+    const message = `Hôm nay là ngày ${lunarDate.date} tháng ${MONTHS_MAP[lunarDate.month]}\nHãy nhớ ăn chay bạn nhé! („• ֊ •„)`;
     const date = new Date(solarDate.year, solarDate.month - 1, solarDate.date);
+    date.setHours(6); // 6:00 AM
 
     LocalNotifications.schedule({
       notifications: [
@@ -33,6 +34,21 @@ export class NotifyService {
           schedule: {
             at: date,
           },
+        },
+      ],
+    });
+  }
+
+  test(solarDate: SolarDate, lunarDate: LunarDate,) {
+    const message = `Hôm nay là ngày ${lunarDate.date} tháng ${MONTHS_MAP[lunarDate.month]}\nHãy nhớ ăn chay bạn nhé! („• ֊ •„)`;
+    const date = new Date(solarDate.year, solarDate.month - 1, solarDate.date);
+
+    LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Ngày ăn chay',
+          body: message,
+          id: date.getDate(),
         },
       ],
     });

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { AlertController, AlertInput } from '@ionic/angular';
+import { SwiperComponent } from 'swiper/angular';
 import { Calendar, CalendarDay } from 'vietnamese-lunar-calendar';
 
 import { MONTHS_MAP, WEEKDAYS_MAP } from '../../constants/mapper.constant';
@@ -14,9 +15,10 @@ export class CalendarMonthPage {
 
   year: number;
   month: number;
-  calendar: Calendar;
+  calendars: Calendar[] = [];
 
   selected: CalendarDay;
+  activeIndex: number = 0;
 
   weekdays = [
     'Hai',
@@ -31,36 +33,62 @@ export class CalendarMonthPage {
   monthsMap = MONTHS_MAP;
   weekdaysMap = WEEKDAYS_MAP;
 
-  constructor(private alert: AlertController) {
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+
+  constructor(
+    private alert: AlertController,
+    private ngZone: NgZone,
+  ) {
+    const today = new Date();
+
+    this.month = today.getMonth() + 1;
+    this.year = today.getFullYear();
+
     this.init();
   }
 
-  private init() {
-    const today = new Date();
-    this.year = today.getFullYear();
-    this.month = today.getMonth() + 1;
-    this.calendar = new Calendar(this.year, this.month);
+  private init(year = this.year, month = this.month) {
+    const calendars: Calendar[] = [];
 
-    this.findToday();
-  }
-
-  private refresh() {
-    if (this.month > 12 || this.month < 1) {
-      return;
+    for (let i = - 2; i <= 2; i++) {
+      calendars.push(this.getCalendar(year, month + i));
     }
 
-    this.calendar = new Calendar(this.year, this.month);
-  }
-
-  private findToday() {
-    // find today in calendar
-    this.calendar.weeks.forEach(week => {
+    let today;
+    calendars[2].weeks.forEach(week => {
       week.forEach(day => {
         if (day.isToday) {
-          this.selected = day;
+          today = day;
         }
       });
     });
+
+    const sorted = [];
+    sorted[this.activeIndex] = calendars[2];
+    sorted[(this.activeIndex + 1) % 5] = calendars[3];
+    sorted[(this.activeIndex + 2) % 5] = calendars[4];
+    sorted[(this.activeIndex + 3) % 5] = calendars[0];
+    sorted[(this.activeIndex + 4) % 5] = calendars[1];
+
+    this.ngZone.run(() => {
+      this.calendars = sorted;
+      this.selected = today ? today : this.selected;
+      this.swiper?.swiperRef?.update();
+    });
+  }
+
+  private getCalendar(year: number, month: number) {
+    if (month < 1) {
+      month = 12 + month;
+      year = year - 1;
+    }
+
+    if (month > 12) {
+      month = month - 12;
+      year = year + 1;
+    }
+
+    return new Calendar(year, month);
   }
 
   nextYear() {
@@ -69,7 +97,7 @@ export class CalendarMonthPage {
     }
 
     this.year += 1;
-    this.refresh();
+    this.init();
   }
 
   prevYear() {
@@ -78,29 +106,21 @@ export class CalendarMonthPage {
     }
 
     this.year -= 1;
-    this.refresh();
+    this.init();
   }
 
   nextMonth() {
-    if (this.month === 12) {
-      this.year += 1;
-      this.month = 1;
-      return this.refresh();
-    }
-
-    this.month += 1;
-    this.refresh();
+    this.swiper?.swiperRef.slideNext();
+    this.slided();
   }
 
   prevMonth() {
-    if (this.month === 1) {
-      this.year -= 1;
-      this.month = 12;
-      return this.refresh();
-    }
+    this.swiper?.swiperRef.slidePrev();
+    this.slided();
+  }
 
-    this.month -= 1;
-    this.refresh();
+  trackByIndex(index: number, item: any) {
+    return index;
   }
 
   isActive(day: CalendarDay) {
@@ -115,12 +135,6 @@ export class CalendarMonthPage {
 
   selectDate(day: CalendarDay) {
     this.selected = day;
-
-    if (this.selected.solar.month !== this.month) {
-      this.month = this.selected.solar.month;
-      this.year = this.selected.solar.year;
-      this.refresh();
-    }
   }
 
   async selectMonth() {
@@ -128,8 +142,7 @@ export class CalendarMonthPage {
       month.checked = month.value === this.month;
       month.handler = (e) => {
         this.month = e.value;
-        this.refresh();
-        this.findToday();
+        this.init();
 
         this.alert.dismiss();
       }
@@ -147,13 +160,11 @@ export class CalendarMonthPage {
   }
 
   async selectYear() {
-
     const inputs: AlertInput[] = YEARS.map(year => {
       year.checked = year.value === this.year;
       year.handler = (e) => {
         this.year = e.value;
-        this.refresh();
-        this.findToday();
+        this.init();
 
         this.alert.dismiss();
       }
@@ -168,6 +179,33 @@ export class CalendarMonthPage {
     });
 
     await alert.present();
+  }
+
+  slided() {
+    const nextIndex = (this.activeIndex + 2) % 5;
+    const prevIndex = (this.activeIndex - 2) >= 0 ? (this.activeIndex - 2) : 5 + (this.activeIndex - 2);
+
+    const activeYear = this.calendars[this.activeIndex].year;
+    const activeMonth = this.calendars[this.activeIndex].month;
+
+    this.ngZone.run(() => {
+      this.year = activeYear;
+      this.month = activeMonth;
+
+      this.calendars[nextIndex] = this.getCalendar(this.year, this.month + 2);
+      this.calendars[prevIndex] = this.getCalendar(this.year, this.month - 2);
+    });
+  }
+
+  onSlideChange(event) {
+    this.activeIndex = event.realIndex;
+
+    if (
+      event?.swipeDirection === 'next' ||
+      event?.swipeDirection === 'prev'
+    ) {
+      this.slided();
+    }
   }
 
 }

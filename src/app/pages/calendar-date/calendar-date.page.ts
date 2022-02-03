@@ -23,7 +23,6 @@ export class CalendarDatePage implements AfterViewInit {
   date: Date = new Date();
 
   quote: string;
-  color: string;
 
   monthsMap = MONTHS_MAP;
   weekDaysMap = WEEKDAYS_MAP;
@@ -38,7 +37,6 @@ export class CalendarDatePage implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.swiper?.swiperRef.slideTo(3);
   }
 
   private init(date: Date = new Date()) {
@@ -52,9 +50,16 @@ export class CalendarDatePage implements AfterViewInit {
       i.setDate(i.getDate() + 1);
     }
 
+    const sorted = [];
+    sorted[this.activeIndex % 5] = dates[2];
+    sorted[(this.activeIndex + 1) % 5] = dates[3];
+    sorted[(this.activeIndex + 2) % 5] = dates[4];
+    sorted[(this.activeIndex + 3) % 5] = dates[0];
+    sorted[(this.activeIndex + 4) % 5] = dates[1];
+
     this.ngZone.run(() => {
-      this.days = dates;
-      this.swiper?.swiperRef.slideTo(3);
+      this.days = sorted;
+      this.swiper?.swiperRef?.update();
     });
   }
 
@@ -134,7 +139,6 @@ export class CalendarDatePage implements AfterViewInit {
   today() {
     this.date = new Date();
     this.init(this.date);
-    this.swiper?.swiperRef.slideTo(3);
   }
 
   onSlideChange(event) {
