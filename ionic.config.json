@@ -1,5 +1,7 @@
 {
   "name": "lunar-calendar",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

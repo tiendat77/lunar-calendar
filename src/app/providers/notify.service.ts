@@ -48,7 +48,11 @@ export class NotifyService {
         {
           title: 'Ngày ăn chay',
           body: message,
-          id: date.getDate(),
+          id: 10,
+          iconColor: '#ff0000',
+          largeIcon: 'ic_buddha',
+          smallIcon: 'ic_stat_casino',
+          sound: 'break_forth.mp3',
         },
       ],
     });
