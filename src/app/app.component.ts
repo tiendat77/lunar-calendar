@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 
@@ -79,8 +80,11 @@ export class AppComponent implements OnInit {
   }
 
   async initializeApp() {
-    StatusBar.setBackgroundColor({color: '#f4f6f6'});
-    StatusBar.setStyle({style: Style.Light});
+    if (Capacitor.isNativePlatform()) {
+      StatusBar.setBackgroundColor({color: '#f4f6f6'});
+      StatusBar.setStyle({style: Style.Light});
+    }
+
     SplashScreen.hide();
 
     await this.storage.init();
